@@ -5,17 +5,14 @@ import base64
 
 spotifyClientId = '5d01a10f2ad7422ebe8e97b71aa1cb11'
 
-
 log = logging.getLogger()
 if log.handlers:
     for handler in log.handlers:
         log.removeHandler(handler)
 logging.basicConfig(format='%(asctime)s %(message)s',level=logging.DEBUG)
 
-def httpTest(event, context):
 
-
-    
+def lambda_function(event, context):
     log.info("function start")
 
 
