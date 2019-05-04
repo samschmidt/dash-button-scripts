@@ -17,7 +17,7 @@ logging.basicConfig(format='%(asctime)s %(message)s', level=logging.DEBUG)
 
 
 # Invoked by AWS lambda
-def lambda_function(event, context):
+def lambda_handler(event, context):
     log.info("lambda_function start")
 
     #debug logs for now
@@ -34,7 +34,7 @@ def lambda_function(event, context):
     refreshToken = parameter['Parameter']['Value']
 
 
-    accessToken = refreshTheToken(refreshToken)
+    accessToken = refreshSpotifyAccessToken(refreshToken)
     log.info(accessToken)
 
     headers = {'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json', 'Accept': 'application/json'}
@@ -88,31 +88,39 @@ def lambda_function(event, context):
         log.error(r.json());
 
 
-def refreshTheToken(refreshToken):
-    #ssm parameter store
-    #https://medium.com/@nqbao/how-to-use-aws-ssm-parameter-store-easily-in-python-94fda04fea84
+# The token required for Spotify authentication expires after 1 hour.
+# This function calls Spotify to get a new one.
+# Ideally, we should store the last refresh time and only call this when the
+# token has expired. 
+def refreshSpotifyAccessToken(refreshToken):
+    # Retrieve the Spotify application Client Secret from Parameter Store
+    # https://medium.com/@nqbao/how-to-use-aws-ssm-parameter-store-easily-in-python-94fda04fea84
     ssm = boto3.client('ssm')
     parameter = ssm.get_parameter(Name='spotify.dash-button-scripts.client-secret', WithDecryption=True)
     
-    log.info('sam sam sam')
+    log.info("Parameter store returned object:")
     log.info(parameter)
+
     spotifyClientSecret = parameter['Parameter']['Value']
 
+    log.info("Parameter store returned Client Secret:")
+    log.info(spotifyClientSecret);
 
     base64ClientIdClientSecret = base64.b64encode((spotifyClientId + ':' + spotifyClientSecret).encode('ascii'))
 
-    log.info('base64 client secret stuff')
-    log.info(base64ClientIdClientSecret)
-
-    clientIdClientSecret = 'Basic ' + base64ClientIdClientSecret.decode('ascii')
+    log.debug('base64 "clientId:clientSecret"')
+    log.debug(base64ClientIdClientSecret)
 
     data = {'grant_type': 'refresh_token', 'refresh_token': refreshToken}
 
-    headers = {'Authorization': clientIdClientSecret}
+    authHeader = 'Basic ' + base64ClientIdClientSecret.decode('ascii')
+    headers = {'Authorization': authHeader}
     p = requests.post('https://accounts.spotify.com/api/token', data=data, headers=headers)
 
     spotifyToken = p.json()
 
+    # We should store the access token's expiration time and only refresh the
+    # token when that expiration time is up.
     # Place the expiration time (current time + almost an hour), and access token into the DB
     # table.put_item(Item={'spotify': 'prod', 'expiresAt': int(time.time()) + 3200,
                                         # 'accessToken': spotifyToken['access_token']})
