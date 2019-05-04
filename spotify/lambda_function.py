@@ -72,6 +72,10 @@ def lambda_handler(event, context):
                 log.info(jsonPayload)
                 r = requests.put('https://api.spotify.com/v1/me/albums', json=jsonPayload, headers=headers)
 
+        #What is the corret text for long press?
+        # elif inputClickType == "LONG"
+            # What should we do here?
+
         else:
             log.error('invalid click type input!?')
             log.error(event)
