@@ -10,28 +10,6 @@ How to install libraries for use on aws lambda
 
 
 
-
-
-
-
-
-
-
- access code
-     https://accounts.spotify.com/authorize?client_id=5d01a10f2ad7422ebe8e97b71aa1cb11&response_type=code&redirect_uri=http://localhost/callback&scope=user-read-currently-playing%20user-read-playback-state%20playlist-modify-public%20playlist-modify-private%20user-library-modify
- AQCM0Ckmh8tYyMg6_SCkdHfA1Q4GNc-aYnqoCQLX1oSd6MsC7NBnkq8enLVJO71LaRfJfZpDVOkA2gR7iCq_D1ZTbW8t9Erh2lgkp0gzPp4IlqO525iXYJKrHWm9YFKFX7neRJVrxhXwQC_5le6jOYbKDY-MnQVt9UrETHGJlEPfi23kJj69AutYFHaety8C3yyziC7d-sk_dryOzuA11l3XwW-P9MOMeZE-nvGRNIeMNH_cjVeuv6KhZoXmRykN8DGXxN5NgWoOgbk1toEFyRnLM6lyO-2ZOMIV01PvNCCVWe44nFGloDXLaHCScE77nFiSHAoYzBebolk0aMmNvEcTW22bKuWy5ZY5agcH
-
-
-
- base64 app token
-     echo -n 5d01a10f2ad7422ebe8e97b71aa1cb11:6d0eb2dd68344a5c933f188a5ba017b0 | base64 
- NWQwMWExMGYyYWQ3NDIyZWJlOGU5N2I3MWFhMWNiMTE6NmQwZWIyZGQ2ODM0NGE1YzkzM2YxODhhNWJhMDE3YjA=
-
-curl -H "Authorization: Basic NWQwMWExMGYyYWQ3NDIyZWJlOGU5N2I3MWFhMWNiMTE6NmQwZWIyZGQ2ODM0NGE1YzkzM2YxODhhNWJhMDE3YjA" -d grant_type=authorization_code -d code=AQCM0Ckmh8tYyMg6_SCkdHfA1Q4GNc-aYnqoCQLX1oSd6MsC7NBnkq8enLVJO71LaRfJfZpDVOkA2gR7iCq_D1ZTbW8t9Erh2lgkp0gzPp4IlqO525iXYJKrHWm9YFKFX7neRJVrxhXwQC_5le6jOYbKDY-MnQVt9UrETHGJlEPfi23kJj69AutYFHaety8C3yyziC7d-sk_dryOzuA11l3XwW-P9MOMeZE-nvGRNIeMNH_cjVeuv6KhZoXmRykN8DGXxN5NgWoOgbk1toEFyRnLM6lyO-2ZOMIV01PvNCCVWe44nFGloDXLaHCScE77nFiSHAoYzBebolk0aMmNvEcTW22bKuWy5ZY5agcH -d redirect_uri=http://localhost/callback https://accounts.spotify.com/api/token
-
-{"access_token":"BQDUAhpSic62hnRl3NQb8vFqQ2_dDWm4DpC9g5pcD4h-vKbaWOWMghv_9enYW69GGFDFM_SheZbdWMk7gUT-aaGf67eCBtpmoare95QPKG10AZ_OriHPS3JPZTIt8-0yqF47NArUoKz27_92yC3gy8GmloVKRlTehxJGgDPTaU4rSuXQYiJQlSe6qvVsnn_0B5VmwP1c8YqvUX48ma5osCUZD1j9Ug","token_type":"Bearer","expires_in":3600,"refresh_token":"AQAvRlRf9BXYhpvKUe2fA-TF6zSdb41GYgEg1R4ZlmOmZ56vgdnHPn3hBNaS-twMDQD54VkiZJEyyVKD3BN0kNOcS3mfDDmCaYIe7_PV3ci6X_dI2zc6Mc8k-ynHwOlMaViqxw","scope":"user-library-modify playlist-modify-private playlist-modify-public user-read-playback-state user-read-currently-playing"}
-
-
 https://docs.python.org/2/library/base64.html
 
  https://joshspicer.com/spotify-now-playing
@@ -52,3 +30,17 @@ https://developer.spotify.com/documentation/web-api/reference/library/save-album
 https://2.python-requests.org//en/master/
 
 https://2.python-requests.org//en/master/user/quickstart/#make-a-request
+https://2.python-requests.org/en/master/api/#main-interface
+
+
+
+https://aws.amazon.com/blogs/compute/sharing-secrets-with-aws-lambda-using-aws-systems-manager-parameter-store/
+https://medium.com/@nqbao/how-to-use-aws-ssm-parameter-store-easily-in-python-94fda04fea84
+
+
+
+
+TODO
+https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/
+
+
